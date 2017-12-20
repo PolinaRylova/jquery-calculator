@@ -7,29 +7,28 @@ function showValueToResultBlock(value) {
     $(".result-block").text(value);
 }
 
-function saveOperandValue(event) {
+function saveOperandValue(value) {
     if (currentOperand.length < 20) {
-        if (event.target.innerText === "." && jQuery.inArray(".", currentOperand) >= 0) {
+        if (value === "." && jQuery.inArray(".", currentOperand) >= 0) {
             alert("Вы не можете ввести более 1 точки");
         } else {
-            currentOperand += event.target.innerText;
+            currentOperand += value;
             showValueToResultBlock(currentOperand);
         }
     } else {
         alert("Вы не можете ввести более 20 символов");
     }
     console.log('currentOperand ' + currentOperand);
+}
+
+function saveOperatorValue(value) {
     if (operator !== "") {
         calculateValue();
     }
-}
-
-function saveOperatorValue(event) {
-    operator = "";
-    operator += event.target.innerText;
-    console.log('operator ' + operator);
     previousOperand += currentOperand;
     currentOperand = "";
+    operator = value;
+    console.log('operator ' + operator);
 }
 
 function calculateValue() {
@@ -55,7 +54,7 @@ function calculateValue() {
     operator = "";
 }
 
-function clearValues(event) {
+function clearValues() {
     previousOperand = "";
     currentOperand = "";
     operator = "";
@@ -67,8 +66,18 @@ function showFinalValue() {
     showValueToResultBlock(result);
 }
 
-$(".operand-btn").on("click", saveOperandValue);
-$(".dot-btn").on("click", saveOperandValue);
-$(".operator-btn").on("click", saveOperatorValue);
+$(".operand-btn").on("click", function (event) {
+    console.log(event);
+    saveOperandValue(event.target.innerText);
+});
+
+$(".dot-btn").on("click", function (event) {
+    console.log(event);
+    saveOperandValue(event.target.innerText);
+});
+$(".operator-btn").on("click", function (event) {
+    console.log(event);
+    saveOperatorValue(event.target.innerText);
+});
 $(".equal-btn").on("click", showFinalValue);
 $(".cancel-btn").on("click", clearValues);
