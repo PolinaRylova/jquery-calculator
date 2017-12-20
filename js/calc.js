@@ -1,6 +1,7 @@
 var currentOperand = "";
 var previousOperand = "";
 var operator = "";
+var result;
 
 function showValueToResultBlock(value) {
     $(".result-block").text(value);
@@ -17,18 +18,21 @@ function saveOperandValue(event) {
     } else {
         alert("Вы не можете ввести более 20 символов");
     }
-    console.log(currentOperand);
+    console.log('currentOperand ' + currentOperand);
+    if (operator !== "") {
+        calculateValue();
+    }
 }
 
 function saveOperatorValue(event) {
+    operator = "";
     operator += event.target.innerText;
-    console.log(operator);
+    console.log('operator ' + operator);
     previousOperand += currentOperand;
     currentOperand = "";
 }
 
-function calculateValue(event) {
-    var result;
+function calculateValue() {
     previousOperand = +previousOperand;
     currentOperand = +currentOperand;
     switch (operator) {
@@ -45,7 +49,7 @@ function calculateValue(event) {
             result = previousOperand / currentOperand;
         break;
     }
-    showValueToResultBlock(result);
+    console.log('result ' + result);
     currentOperand = "";
     previousOperand = result;
     operator = "";
@@ -58,8 +62,13 @@ function clearValues(event) {
     showValueToResultBlock(currentOperand);
 }
 
+function showFinalValue() {
+    calculateValue();
+    showValueToResultBlock(result);
+}
+
 $(".operand-btn").on("click", saveOperandValue);
 $(".dot-btn").on("click", saveOperandValue);
 $(".operator-btn").on("click", saveOperatorValue);
-$(".equal-btn").on("click", calculateValue);
+$(".equal-btn").on("click", showFinalValue);
 $(".cancel-btn").on("click", clearValues);
