@@ -1,8 +1,10 @@
 .calc {
     width: 200px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
 }
 
-button {
+.btn {
     box-sizing: border-box;
     width: 40px;
     height: 40px;
@@ -12,10 +14,12 @@ button {
     background-color: gainsboro;
 }
 
-.result {
-    width: 94%;
+.result-block {
+    box-sizing: border-box;
+    width: 95%;
     height: 40px;
     margin: 15px 3px 8px;
+    padding: 10px 5px;
     border: 1px solid grey;
     border-radius: 4px;
 }
