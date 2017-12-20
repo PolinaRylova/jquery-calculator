@@ -46,6 +46,9 @@ function calculateValue(event) {
         break;
     }
     showValueToResultBlock(result);
+    currentOperand = "";
+    previousOperand = result;
+    operator = "";
 }
 
 function clearValues(event) {
