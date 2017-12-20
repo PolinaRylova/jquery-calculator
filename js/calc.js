@@ -1,22 +1,62 @@
-var leftOperand = "";
+var currentOperand = "";
+var previousOperand = "";
+var operator = "";
 
 function showValueToResultBlock(value) {
     $(".result-block").text(value);
 }
 
-function saveValue(event) {
-    if (leftOperand.length < 20) {
-        if (event.target.innerText === "." && jQuery.inArray(".", leftOperand) >= 0) {
+function saveOperandValue(event) {
+    if (currentOperand.length < 20) {
+        if (event.target.innerText === "." && jQuery.inArray(".", currentOperand) >= 0) {
             alert("Вы не можете ввести более 1 точки");
         } else {
-            leftOperand += event.target.innerText;
-            showValueToResultBlock(leftOperand);
+            currentOperand += event.target.innerText;
+            showValueToResultBlock(currentOperand);
         }
     } else {
         alert("Вы не можете ввести более 20 символов");
     }
-    console.log(leftOperand);
+    console.log(currentOperand);
 }
 
-$(".operand-btn").on("click", saveValue);
-$(".dot-btn").on("click", saveValue);
+function saveOperatorValue(event) {
+    operator += event.target.innerText;
+    console.log(operator);
+    previousOperand += currentOperand;
+    currentOperand = "";
+}
+
+function calculateValue(event) {
+    var result;
+    previousOperand = +previousOperand;
+    currentOperand = +currentOperand;
+    switch (operator) {
+        case '+':
+            result = previousOperand + currentOperand;
+        break;
+        case '-':
+            result = previousOperand - currentOperand;
+        break;
+        case '*':
+            result = previousOperand * currentOperand;
+        break;
+        case '/':
+            result = previousOperand / currentOperand;
+        break;
+    }
+    showValueToResultBlock(result);
+}
+
+function clearValues(event) {
+    previousOperand = "";
+    currentOperand = "";
+    operator = "";
+    showValueToResultBlock(currentOperand);
+}
+
+$(".operand-btn").on("click", saveOperandValue);
+$(".dot-btn").on("click", saveOperandValue);
+$(".operator-btn").on("click", saveOperatorValue);
+$(".equal-btn").on("click", calculateValue);
+$(".cancel-btn").on("click", clearValues);
