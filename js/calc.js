@@ -65,7 +65,13 @@ function clearValues() {
 
 function showFinalValue() {
     calculateValue();
-    showValueToResultBlock(previousOperand);
+    previousOperand = previousOperand.toString();
+    if (previousOperand.length > 20) {
+        alert("Ваш результат " + previousOperand + " превышает доступные размеры поля, поэтому не может быть отображен полностью");
+        showValueToResultBlock("E" + previousOperand.slice(0, 19));
+    } else {
+        showValueToResultBlock(previousOperand);
+    }
 }
 
 $(".operand-btn").on("click", (event) => saveOperandValue(event.target.innerText));
