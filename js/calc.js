@@ -1,7 +1,7 @@
-var currentOperand = "";
-var previousOperand = "";
-var operator = "";
-var result;
+let currentOperand = "";
+let previousOperand = "";
+let operator = "";
+let result;
 
 function showValueToResultBlock(value) {
     $(".result-block").text(value);
