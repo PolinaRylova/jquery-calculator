@@ -1,7 +1,6 @@
 let currentOperand = "";
 let previousOperand = "";
 let operator = "";
-let result;
 
 function showValueToResultBlock(value) {
     $(".result-block").text(value);
@@ -12,6 +11,7 @@ function saveOperandValue(value) {
         if (value === "." && jQuery.inArray(".", currentOperand) >= 0) {
             alert("Вы не можете ввести более 1 точки");
         } else {
+            // конкатенация, а не простое присваивание необходимо для возможности ввода многозначных чисел
             currentOperand += value;
             showValueToResultBlock(currentOperand);
         }
@@ -24,34 +24,33 @@ function saveOperandValue(value) {
 function saveOperatorValue(value) {
     if (operator !== "") {
         calculateValue();
+    } else {
+        previousOperand = currentOperand;
+        // очищаем, чтобы не сконкатенировалось с предыдущим результатом при новом вызове функции saveOperandValue
+        currentOperand = "";
     }
-    previousOperand += currentOperand;
-    currentOperand = "";
     operator = value;
     console.log('operator ' + operator);
 }
 
 function calculateValue() {
-    previousOperand = +previousOperand;
-    currentOperand = +currentOperand;
     switch (operator) {
         case '+':
-            result = previousOperand + currentOperand;
+            previousOperand = Number(previousOperand) + Number(currentOperand);
         break;
         case '-':
-            result = previousOperand - currentOperand;
+            previousOperand = previousOperand - currentOperand;
         break;
         case '*':
-            result = previousOperand * currentOperand;
+            previousOperand = previousOperand * currentOperand;
         break;
         case '/':
-            result = previousOperand / currentOperand;
+            previousOperand = previousOperand / currentOperand;
         break;
     }
-    console.log('result ' + result);
+    console.log('previousOperand ' + previousOperand);
+    // очищаем, чтобы не сконкатенировалось с предыдущим результатом при новом вызове функции saveOperandValue
     currentOperand = "";
-    previousOperand = result;
-    operator = "";
 }
 
 function clearValues() {
@@ -63,7 +62,7 @@ function clearValues() {
 
 function showFinalValue() {
     calculateValue();
-    showValueToResultBlock(result);
+    showValueToResultBlock(previousOperand);
 }
 
 $(".operand-btn").on("click", (event) => saveOperandValue(event.target.innerText));
