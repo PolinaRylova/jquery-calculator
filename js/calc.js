@@ -10,6 +10,9 @@ function saveOperandValue(value) {
     if (currentOperand.length < 20) {
         if (value === "." && jQuery.inArray(".", currentOperand) >= 0) {
             alert("Вы не можете ввести более 1 точки");
+        } else if (value === "." && currentOperand.length <= 0) {
+            currentOperand = "0" + value;
+            showValueToResultBlock(currentOperand);
         } else {
             // конкатенация, а не простое присваивание необходимо для возможности ввода многозначных чисел
             currentOperand += value;
