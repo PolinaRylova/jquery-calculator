@@ -66,18 +66,8 @@ function showFinalValue() {
     showValueToResultBlock(result);
 }
 
-$(".operand-btn").on("click", function (event) {
-    console.log(event);
-    saveOperandValue(event.target.innerText);
-});
-
-$(".dot-btn").on("click", function (event) {
-    console.log(event);
-    saveOperandValue(event.target.innerText);
-});
-$(".operator-btn").on("click", function (event) {
-    console.log(event);
-    saveOperatorValue(event.target.innerText);
-});
+$(".operand-btn").on("click", (event) => saveOperandValue(event.target.innerText));
+$(".dot-btn").on("click", (event) => saveOperandValue(event.target.innerText));
+$(".operator-btn").on("click", (event) => saveOperatorValue(event.target.innerText));
 $(".equal-btn").on("click", showFinalValue);
 $(".cancel-btn").on("click", clearValues);
